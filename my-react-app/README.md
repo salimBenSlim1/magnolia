@@ -70,5 +70,5 @@ Edit
 ### 1. Clone the repo
 
 ```bash
-git clone https://github.com/salimbenslim1/magnolia-portfolio.git
+git clone https://github.com/salimBenSlim1/magnolia
 cd magnolia-portfolio
