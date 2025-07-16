@@ -1,0 +1,16 @@
+{
+  "title": "Salim Ben Slim",
+  "bio": "Full Stack Developer passionate about modern web technologies.",
+  "projects": [
+    {
+      "id": 1,
+      "name": "Project A",
+      "description": "An amazing project built with React."
+    },
+    {
+      "id": 2,
+      "name": "Project B",
+      "description": "A cool backend API."
+    }
+  ]
+}
