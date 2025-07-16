@@ -36,7 +36,7 @@ This is a personal portfolio project built with a **headless CMS architecture** 
 
 ## 🗂️ Folder Structure
 
-magnolia-portfolio/
+my-react-app/
 ├── public/
 ├── src/
 │ ├── components/
