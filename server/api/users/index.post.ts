@@ -5,7 +5,7 @@ import bcrypt from 'bcryptjs'
 export default defineEventHandler(async (event) => {
   // Step 1: Connect to the database
   await dbConnect()
-
+  
   // Step 2: Get the body from the request (user data)
   const body = await readBody(event)
 

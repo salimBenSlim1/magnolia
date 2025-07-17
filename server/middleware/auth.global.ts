@@ -1,23 +1,32 @@
-// server/middleware/auth.global.ts
-import { defineEventHandler, getCookie, createError } from 'h3'
+import { defineEventHandler, getCookie, createError, sendRedirect } from 'h3'
 import jwt from 'jsonwebtoken'
 
 export default defineEventHandler(async (event) => {
-  const token = getCookie(event, 'token')
-  // Only protect specific routes
-  const url= event.node.req.url||""
-    if (url.startsWith('/') || url.startsWith('/api/public')) return
-    if (!token) {
-        return sendRedirect(event, '/')
-    }
+  const url = event.node.req.url || ''
+  const method = event.node.req.method || 'GET'
 
-    try {
-      const user = jwt.verify(token, process.env.JWT_SECRET!)
-    
-      // Attach user to event for later use
-      event.context.user = user
-    } catch (err) {
-      throw createError({ statusCode: 401, statusMessage: 'Invalid token' })
-    }
-  
+  // ✅ Public API routes
+  if (
+    url.startsWith('/api/auth') ||                  // auth API
+    url.startsWith('/auth') ||                      // frontend auth pages
+    (url.startsWith('/api/users') && method === 'POST')  // allow creating user
+  ) {
+    return
+  }
+
+  const token = getCookie(event, 'token')
+
+  if (!token) {
+    return sendRedirect(event, '/auth/login')
+  }
+
+  try {
+    const user = jwt.verify(token, process.env.JWT_SECRET!)
+    event.context.user = user
+    // if (user.role !== 'admin'&& url.startsWith('/api/users')&& method !== 'GET') {
+    //   return sendRedirect(event, '/auth/login')
+    // }
+  } catch (err) {
+    throw createError({ statusCode: 401, statusMessage: 'Invalid token' })
+  }
 })

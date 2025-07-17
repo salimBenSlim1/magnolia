@@ -5,6 +5,7 @@ const userSchema = new mongoose.Schema({
   email: { type: String, unique: true },
   password: String,
   walletAddress: String,
+  cart:[Object]
 }, { timestamps: true })
 
 export default mongoose.models.User || mongoose.model('User', userSchema)

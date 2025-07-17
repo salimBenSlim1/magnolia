@@ -6,9 +6,10 @@ import jwt from 'jsonwebtoken'
 
 export default defineEventHandler(async (event) => {
   await dbConnect()
+  console.log('first')
   const body = await readBody(event)
   const { email, password } = body
-
+  console.log(body)
   const user = await User.findOne({ email })
   if (!user) {
     return createError({ statusCode: 401, statusMessage: 'Invalid credentials' })
@@ -20,7 +21,7 @@ export default defineEventHandler(async (event) => {
   }
 
   // Create JWT
-  const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET!, {
+  const token = jwt.sign({ userId: user._id,role:'user' }, process.env.JWT_SECRET!, {
     expiresIn: '7d',
   })
   // Set HttpOnly cookie
@@ -36,7 +37,7 @@ export default defineEventHandler(async (event) => {
     message: 'Login successful',
     user: {
       _id: user._id,
-      email: user.email,
+      
       name: user.name,
     },
   }

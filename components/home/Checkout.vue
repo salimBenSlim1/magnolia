@@ -8,14 +8,14 @@
 <script setup>
 import { ref } from 'vue'
 import { useBlockchainPayment } from '~/composables/useBlockchainPayment'
+  
 
 // State
-const amount = ref(0.05) // Amount in ETH
+const amount = ref("0.05") // Amount in ETH
 const orderId = ref('order123')
 
 // Payment handler
 const handlePayment = async () => {
-    console.log(amount)
   try {
     const txHash = await useBlockchainPayment(amount.value, orderId.value)
     console.log('Payment successful, transaction hash:', txHash)
